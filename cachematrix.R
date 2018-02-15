@@ -1,15 +1,29 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This file contains functions for generating, caching, and retrieving inverses of arbitrary, invertible matrices.
 
-## Write a short comment describing this function
+##creates a special data type for creating and caching matrix inverses
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  i <- NULL
+  setMat <- function(y) {x <<-y}
+  getMat <- function() {x}
+  setInv <- function(y) {i <<- y}
+  getInv <- function() {i}
+  list(setMat=setMat, getMat=getMat, setInv=setInv, getInv=getInv)
 }
 
 
-## Write a short comment describing this function
+##retrieves cached matrix inverses from makeCacheMatrix datatype
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  i <- x$getInv()
+  if(is.null(i)){
+    i <- solve(x$getMat())
+    x$setInv(i)
+    return(i)
+  }
+  else {
+    #retrieve inverse
+    print("getting cached data")
+    return(x$getInv())
+  }
 }
